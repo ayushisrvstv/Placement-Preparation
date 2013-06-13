@@ -1,0 +1,92 @@
+package controller;
+import beans.*;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class for Servlet: AdminLoginServlet
+ *
+ */
+ public class AdminLoginServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+   static final long serialVersionUID = 1L;
+   RequestDispatcher rd;
+   
+    /* (non-Java-doc)
+	 * @see javax.servlet.http.HttpServlet#HttpServlet()
+	 */
+	public AdminLoginServlet() {
+		super();
+	
+	}   	
+	
+	/* (non-Java-doc)
+	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		process(request,response);
+	}  	
+	
+	/* (non-Java-doc)
+	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		process(request,response);
+	}   	  	    
+	
+public void process (HttpServletRequest request, HttpServletResponse response){
+		
+		String uname=request.getParameter("uname");
+		String pswd=request.getParameter("pswd");
+		
+		Login log=new Login(uname,pswd);
+		String mesg = "";
+		
+			if (uname==null||uname.trim().equals("")) {
+
+				mesg = "Please enter username";
+				request.setAttribute("mesg", mesg);
+                 try{		
+				 rd=request.getRequestDispatcher("login.jsp");
+				 rd.forward(request,response);
+                 }
+				 catch(Exception e){
+					 
+				 }
+			}
+			else if (pswd==null||pswd.trim().equals("")){
+				mesg = "Please enter password";
+				request.setAttribute("mesg", mesg);
+				try{
+				rd=request.getRequestDispatcher("login.jsp");
+				 rd.forward(request,response);
+				}
+				catch(Exception e){
+			
+				}
+
+			}
+			else if (uname.equals("admin")&& pswd.equals("admin")){
+				try{
+			
+				rd=request.getRequestDispatcher("adminHome.jsp");
+				 rd.forward(request,response);
+				}
+				catch(Exception e){
+			
+				}
+
+			}
+			
+	
+	
+	
+}
+}
